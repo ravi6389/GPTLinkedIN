@@ -13,24 +13,26 @@ jobs:
       contents: read
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up Python version
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Create venv and install backend dependencies
+      - name: Install backend dependencies
         working-directory: backend
         run: |
           python -m venv antenv
           source antenv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Upload backend artifact
         uses: actions/upload-artifact@v4
         with:
-          name: python-backend
+          name: backend-package
           path: backend
 
   deploy:
@@ -41,12 +43,13 @@ jobs:
       - name: Download backend artifact
         uses: actions/download-artifact@v4
         with:
-          name: python-backend
+          name: backend-package
+          path: backend
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'GPTLinkedIn'
-          slot-name: 'Production'
+          app-name: GPTLinkedIn
+          slot-name: Production
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5A9C556723E74FAF8B75FB38B61FF83B }}
-          package: python-backend
+          package: backend
