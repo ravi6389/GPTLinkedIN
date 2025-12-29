@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from langchain_groq import ChatGroq
-from langchain.schema import HumanMessage
+from langchain_core.messages import HumanMessage
 import os
 
 # --------------------------------------------------
@@ -121,3 +121,4 @@ Answer concisely and professionally.
 @app.get("/")
 def health():
     return {"status": "ok"}
+
