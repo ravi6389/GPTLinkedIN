@@ -49,4 +49,5 @@ jobs:
           app-name: 'GPTLinkedIn'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5A9C556723E74FAF8B75FB38B61FF83B }}
-          package: backend
+          package: python-backend
+
